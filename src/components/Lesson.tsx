@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format, parseISO, isPast } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { CheckCircle, Lock } from "phosphor-react";
 
@@ -12,7 +12,7 @@ type LessonProps = {
 };
 
 export function Lesson({ lesson }: LessonProps) {
-  const isLessonAvailable = false;
+  const isLessonAvailable = isPast(parseISO(lesson.availableAt));
 
   return (
     <a href="#">
