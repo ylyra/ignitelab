@@ -1,10 +1,7 @@
-function App() {
+import { Event } from "./pages/Event";
 
-  return (
-    <div className="App">
-      hello world
-    </div>
-  )
+function App() {
+  return <Event />;
 }
 
-export default App
+export default App;
