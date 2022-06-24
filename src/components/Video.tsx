@@ -71,25 +71,24 @@ export function Video({ lessonSlug }: VideoProps) {
       <div className="p-8 max-w-[1100px] mx-auto">
         <div className="flex items-start gap-16">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold">Aula 01</h1>
+            <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
             <p className="mt-4 text-gray-200 leading-relaxed">
-              Chegamos na metade do nosso evento, mas ainda tem mais pela
-              frente…Na terceira aula vamos continuar nosso projeto,
-              desenvolvendo o roteamento e player. Essa é mais uma etapa para
-              sua especialização em React!
+              {data.lesson.description}
             </p>
 
             <div className="flex items-center gap-4 mt-6">
               <img
-                src="https://github.com/ylyra.png"
+                src={data.lesson.teacher.avatarURL}
                 alt="git user photo"
                 className="h-16 w-16 rounded-full border-2 border-blue-500"
               />
 
               <div className="leading-relaxed">
-                <strong className="text-2xl block">Yan Lyra</strong>
+                <strong className="text-2xl block">
+                  {data.lesson.teacher.name}
+                </strong>
                 <span className="text-gray-200 text-sm block">
-                  FullStack @Coopers
+                  {data.lesson.teacher.bio}
                 </span>
               </div>
             </div>
