@@ -6,15 +6,63 @@ import {
   Image,
   Lightning,
 } from "phosphor-react";
+import { gql, useQuery } from "@apollo/client";
+
 import "@vime/core/themes/default.css";
 
-export function Video() {
+const GET_LESSON_BY_SLUG_QUERY = gql`
+  query GetQueryBySlug($slug: String) {
+    lesson(where: { slug: $slug }) {
+      title
+      id
+      description
+      videoId
+      teacher {
+        avatarURL
+        bio
+        name
+      }
+    }
+  }
+`;
+
+type GetLessonResponse = {
+  lesson: {
+    title: string;
+    id: string;
+    description: string;
+    videoId: string;
+    teacher: {
+      avatarURL: string;
+      bio: string;
+      name: string;
+    };
+  };
+};
+
+type VideoProps = {
+  lessonSlug: string;
+};
+
+export function Video({ lessonSlug }: VideoProps) {
+  const { data } = useQuery<GetLessonResponse>(GET_LESSON_BY_SLUG_QUERY, {
+    variables: { slug: lessonSlug },
+  });
+
+  if (!data) {
+    return (
+      <div className="flex-1">
+        <p>Carregando...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
           <Player>
-            <Youtube videoId="KJj70dBgRPo" />
+            <Youtube videoId={data.lesson.videoId} />
             <DefaultUi />
           </Player>
         </div>

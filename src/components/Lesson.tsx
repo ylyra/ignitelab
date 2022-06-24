@@ -1,6 +1,7 @@
 import { format, parseISO, isPast } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { CheckCircle, Lock } from "phosphor-react";
+import { Link } from "react-router-dom";
 
 type LessonProps = {
   lesson: {
@@ -15,7 +16,10 @@ export function Lesson({ lesson }: LessonProps) {
   const isLessonAvailable = isPast(parseISO(lesson.availableAt));
 
   return (
-    <a href="#">
+    <Link
+      to={isLessonAvailable ? `/event/lesson/${lesson.slug}` : "#"}
+      className="group"
+    >
       <time className="text-gray-300 block" dateTime={lesson.availableAt}>
         {format(
           parseISO(lesson.availableAt),
@@ -26,7 +30,7 @@ export function Lesson({ lesson }: LessonProps) {
         )}
       </time>
 
-      <section className="rounded border border-gray-500 p-4 mt-2">
+      <section className="rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500 transition-colors">
         <header className="flex items-center justify-between">
           {isLessonAvailable ? (
             <span className="text-sm text-blue-500 font-medium flex items-center gap-2">
@@ -46,6 +50,6 @@ export function Lesson({ lesson }: LessonProps) {
         </header>
         <strong className="text-gray-200 mt-5 block">{lesson.title}</strong>
       </section>
-    </a>
+    </Link>
   );
 }
