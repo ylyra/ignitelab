@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import { format, parseISO, isPast } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { CheckCircle, Lock } from "phosphor-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 type LessonProps = {
   lesson: {
@@ -13,7 +14,9 @@ type LessonProps = {
 };
 
 export function Lesson({ lesson }: LessonProps) {
+  const { slug } = useParams<{ slug: string }>();
   const isLessonAvailable = isPast(parseISO(lesson.availableAt));
+  const isCurrentLesson = lesson.slug === slug;
 
   return (
     <Link
@@ -30,10 +33,23 @@ export function Lesson({ lesson }: LessonProps) {
         )}
       </time>
 
-      <section className="rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500 transition-colors">
+      <section
+        className={clsx(
+          "rounded border  p-4 mt-2 group-hover:border-green-500 transition-colors",
+          {
+            "border-gray-500": !isCurrentLesson,
+            "border-green-500 bg-green-500": isCurrentLesson,
+          }
+        )}
+      >
         <header className="flex items-center justify-between">
           {isLessonAvailable ? (
-            <span className="text-sm text-blue-500 font-medium flex items-center gap-2">
+            <span
+              className={clsx("text-sm  font-medium flex items-center gap-2", {
+                "text-blue-500": !isCurrentLesson,
+                "text-white": isCurrentLesson,
+              })}
+            >
               <CheckCircle size={20} />
               Conteúdo liberado
             </span>
@@ -44,11 +60,26 @@ export function Lesson({ lesson }: LessonProps) {
             </span>
           )}
 
-          <span className="text-xs rounded px-2 py-[0.125rem] text-white border boder-green-300 font-bold uppercase">
+          <span
+            className={clsx(
+              "text-xs rounded px-2 py-[0.125rem] text-white border  font-bold uppercase",
+              {
+                "boder-green-300": !isCurrentLesson,
+                "border-white": isCurrentLesson,
+              }
+            )}
+          >
             {lesson.lessonType === "live" ? "Ao Vivo" : "Aula Prática"}
           </span>
         </header>
-        <strong className="text-gray-200 mt-5 block">{lesson.title}</strong>
+        <strong
+          className={clsx("mt-5 block", {
+            "text-gray-200": !isCurrentLesson,
+            "text-white": isCurrentLesson,
+          })}
+        >
+          {lesson.title}
+        </strong>
       </section>
     </Link>
   );
