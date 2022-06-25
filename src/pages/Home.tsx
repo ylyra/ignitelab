@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { Logo } from "../components/Logo";
 import { hasErrors } from "../utils/hasErrors";
 import { useCreateSubscriberMutation } from "../graphql/generated";
+import codeMockupImage from "../assets/code-mockup.png";
 
 type FormProps = {
   name: string;
@@ -142,11 +143,7 @@ export function Home() {
           </form>
         </div>
       </div>
-      <img
-        src="/src/assets/code-mockup.png"
-        className="mt-10"
-        alt="Code Mockup"
-      />
+      <img src={codeMockupImage} className="mt-10" alt="Code Mockup" />
     </div>
   );
 }
