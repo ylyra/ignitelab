@@ -1,4 +1,3 @@
-import { gql, useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback } from "react";
 import clsx from "clsx";
@@ -9,14 +8,7 @@ import * as yup from "yup";
 
 import { Logo } from "../components/Logo";
 import { hasErrors } from "../utils/hasErrors";
-
-const CREATE_SUBSCRIBER_MUTATION = gql`
-  mutation CreateSubscriber($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-    }
-  }
-`;
+import { useCreateSubscriberMutation } from "../graphql/generated";
 
 type FormProps = {
   name: string;
@@ -36,7 +28,7 @@ export function Home() {
       email: "",
     },
   });
-  const [createSubscriber] = useMutation(CREATE_SUBSCRIBER_MUTATION);
+  const [createSubscriber] = useCreateSubscriberMutation();
   const navigate = useNavigate();
 
   const onUserSubmit: SubmitHandler<FormProps> = async (data) => {

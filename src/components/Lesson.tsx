@@ -8,7 +8,7 @@ type LessonProps = {
   lesson: {
     title: string;
     slug: string;
-    availableAt: string;
+    availableAt?: any;
     lessonType: "live" | "class";
   };
 };
